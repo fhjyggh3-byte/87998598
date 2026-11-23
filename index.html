@@ -72,7 +72,6 @@ body {
     padding: 80px 0 40px;
 }
 
-/* ===== Переключатель тем ===== */
 .theme-switcher {
     position: fixed;
     top: 24px;
@@ -102,17 +101,9 @@ body {
     justify-content: center;
 }
 
-.theme-btn:hover {
-    transform: scale(1.15) rotate(10deg);
-    background: var(--border);
-}
+.theme-btn:hover { transform: scale(1.15) rotate(10deg); background: var(--border); }
+.theme-btn.active { background: var(--accent); box-shadow: 0 0 20px var(--accent); }
 
-.theme-btn.active {
-    background: var(--accent);
-    box-shadow: 0 0 20px var(--accent);
-}
-
-/* ===== Фоновые орбы ===== */
 .bg-orbs {
     position: fixed;
     inset: 0;
@@ -141,7 +132,6 @@ body {
     66% { transform: translate(-40px, 60px) scale(0.95); }
 }
 
-/* ===== ФОН ИЗ РОЗ ===== */
 .roses-bg {
     position: fixed;
     inset: 0;
@@ -172,7 +162,6 @@ body {
     100% { transform: translateY(115vh) rotate(360deg) scale(0.7); opacity: 0; }
 }
 
-/* ===== Контейнер ===== */
 .container {
     position: relative;
     z-index: 2;
@@ -183,7 +172,6 @@ body {
     margin: 0 auto;
 }
 
-/* ===== Заголовок ===== */
 .title {
     font-size: clamp(1.8rem, 6vw, 4.5rem);
     font-weight: 900;
@@ -246,7 +234,6 @@ body {
     animation: fadeIn 1s 0.6s backwards;
 }
 
-/* ===== Общие карточки ===== */
 .card {
     background: var(--card);
     backdrop-filter: blur(20px);
@@ -257,7 +244,6 @@ body {
     transition: background 0.5s, border 0.5s;
 }
 
-/* ===== Секция ответов ===== */
 .answer-section { margin-bottom: 20px; }
 
 .magic-btn {
@@ -276,11 +262,7 @@ body {
     margin-bottom: 20px;
 }
 
-.magic-btn:hover {
-    transform: translateY(-3px) scale(1.03);
-    box-shadow: 0 20px 60px -10px var(--accent);
-}
-
+.magic-btn:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 20px 60px -10px var(--accent); }
 .magic-btn:active { transform: translateY(0) scale(0.98); }
 
 .magic-btn .btn-glow {
@@ -315,7 +297,6 @@ body {
     100% { transform: scale(1); }
 }
 
-/* ===== Генератор оскорблений ===== */
 .insult-card {
     margin-bottom: 20px;
     position: relative;
@@ -399,11 +380,7 @@ body {
     box-shadow: 0 8px 24px -8px var(--accent);
 }
 
-.insult-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 32px -8px var(--accent);
-}
-
+.insult-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 32px -8px var(--accent); }
 .insult-btn:active { transform: scale(0.96); }
 
 .insult-btn.mega {
@@ -411,12 +388,8 @@ body {
     box-shadow: 0 8px 24px -8px var(--danger);
 }
 
-.insult-btn.copy {
-    background: var(--text-muted);
-    box-shadow: none;
-}
+.insult-btn.copy { background: var(--text-muted); box-shadow: none; }
 
-/* ===== История ===== */
 .history {
     margin-top: 16px;
     display: flex;
@@ -442,7 +415,6 @@ body {
     to { opacity: 1; transform: translateX(0); }
 }
 
-/* ===== Статистика ===== */
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
@@ -481,10 +453,7 @@ body {
     font-weight: 600;
 }
 
-/* ===== Достижения ===== */
-.achievements {
-    margin-bottom: 20px;
-}
+.achievements { margin-bottom: 20px; }
 
 .ach-grid {
     display: flex;
@@ -535,7 +504,6 @@ body {
     z-index: 10;
 }
 
-/* ===== Уведомление о достижении ===== */
 .toast {
     position: fixed;
     top: 90px;
@@ -558,7 +526,6 @@ body {
 
 .toast.show { transform: translateX(-50%) translateY(0); }
 
-/* ===== Тряска экрана ===== */
 @keyframes screenShake {
     0%, 100% { transform: translate(0, 0); }
     10%, 30%, 50%, 70%, 90% { transform: translate(-4px, 2px) rotate(-0.3deg); }
@@ -567,7 +534,6 @@ body {
 
 body.shake-screen { animation: screenShake 0.6s; }
 
-/* ===== Частицы ===== */
 .particles {
     position: fixed;
     inset: 0;
@@ -593,7 +559,6 @@ body.shake-screen { animation: screenShake 0.6s; }
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* ===== Адаптив ===== */
 @media (max-width: 600px) {
     .theme-switcher { top: 12px; right: 12px; padding: 6px; gap: 6px; }
     .theme-btn { width: 38px; height: 38px; font-size: 18px; }
@@ -604,14 +569,12 @@ body.shake-screen { animation: screenShake 0.6s; }
 </head>
 <body>
 
-<!-- Переключатель тем -->
 <div class="theme-switcher">
     <button class="theme-btn" data-theme="light" title="Светлая">☀️</button>
     <button class="theme-btn" data-theme="dark" title="Тёмная">🌙</button>
     <button class="theme-btn" data-theme="pink" title="Кирилл">💖</button>
 </div>
 
-<!-- Фон -->
 <div class="roses-bg" id="rosesBg"></div>
 <div class="bg-orbs">
     <div class="orb orb1"></div>
@@ -619,10 +582,8 @@ body.shake-screen { animation: screenShake 0.6s; }
     <div class="orb orb3"></div>
 </div>
 
-<!-- Уведомление о достижении -->
 <div class="toast" id="toast">🏆 <span id="toastText"></span></div>
 
-<!-- Основной контент -->
 <main class="container">
     <h1 class="title">
         <span class="word">Ответь</span>
@@ -632,7 +593,6 @@ body.shake-screen { animation: screenShake 0.6s; }
 
     <p class="subtitle">Генератор оскорблений, ответы и куча всего 👇</p>
 
-    <!-- Статистика -->
     <div class="stats-grid">
         <div class="stat-item">
             <span class="stat-value" id="statClicks">0</span>
@@ -652,7 +612,6 @@ body.shake-screen { animation: screenShake 0.6s; }
         </div>
     </div>
 
-    <!-- Генератор оскорблений -->
     <div class="card insult-card" id="insultCard">
         <div class="section-title">🎲 Генератор оскорблений</div>
         <div class="insult-display" id="insultDisplay">
@@ -666,7 +625,6 @@ body.shake-screen { animation: screenShake 0.6s; }
         <div class="history" id="history"></div>
     </div>
 
-    <!-- Секция ответов -->
     <div class="card answer-section">
         <div class="section-title">💬 Ответ Кириллу</div>
         <button class="magic-btn" id="magicBtn">
@@ -678,7 +636,6 @@ body.shake-screen { animation: screenShake 0.6s; }
         </div>
     </div>
 
-    <!-- Достижения -->
     <div class="card achievements">
         <div class="section-title">🏆 Достижения</div>
         <div class="ach-grid" id="achGrid"></div>
@@ -729,7 +686,7 @@ function createRoses() {
 }
 createRoses();
 
-// ===== СИСТЕМА ДОСТИЖЕНИЙ =====
+// ===== ДОСТИЖЕНИЯ =====
 const ACHIEVEMENTS = {
     firstInsult: { icon: '🎯', name: 'Первый выстрел', tip: 'Сгенерируй первое оскорбление' },
     tenInsults:  { icon: '🔥', name: 'Разогрев', tip: '10 оскорблений' },
@@ -755,10 +712,8 @@ function unlockAch(key) {
     if (unlocked[key]) return;
     unlocked[key] = true;
     localStorage.setItem('unlockedAch', JSON.stringify(unlocked));
-
     const el = document.querySelector(`.ach[data-key="${key}"]`);
     if (el) el.classList.add('unlocked');
-
     showToast(`🏆 Достижение: ${ACHIEVEMENTS[key].name}`);
     updateStats();
 }
@@ -839,7 +794,6 @@ function generateInsult(mega = false) {
     } else {
         text = `${randomItem(adjectives)} ${randomItem(nouns)}${randomItem(endings)}`;
     }
-    // Заглавная первая буква
     return text.charAt(0).toUpperCase() + text.slice(1);
 }
 
@@ -874,7 +828,6 @@ function showInsult(text, mega = false) {
     insultCard.classList.add('flash');
 
     addToHistory(text);
-
     stats.insults++;
     saveStats();
 
@@ -883,7 +836,6 @@ function showInsult(text, mega = false) {
     if (stats.insults === 50) unlockAch('fiftyInsults');
     if (mega) unlockAch('mega');
 
-    // Частицы
     const rect = insultDisplay.getBoundingClientRect();
     if (mega) {
         burst(rect.left + rect.width / 2, rect.top + rect.height / 2, '💥', 30);
@@ -930,12 +882,12 @@ const answers = [
     'Ну и хули мы читаем и нихуя не отвечаем 🤷',
     'го пиздеть 📞',
     'го в кс',
-    ' Ты Za Путина?',
+    'Ты Za Путина?',
     'Неанденталин',
     'пизда',
     'ты мне еще 500 должен',
     'хуй',
-    'че в ишиме нахуй'
+    'че в ишиме нахуй',
     'последнию тему сайта специально под тебя сделал',
     'Кириллу пора на пенсию',
     'бакулюм',
