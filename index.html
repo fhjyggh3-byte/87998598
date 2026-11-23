@@ -1,724 +1,1020 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<!-- Указываем браузеру, что мы поддерживаем и светлую, и темную тему -->
-<meta name="color-scheme" content="dark light" />
-<title>Матвей лох 🦣</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ответь, Кирилл, мудила</title>
 <style>
-  /* --- БАЗОВЫЕ СТИЛИ (ПО УМОЛЧАНИЮ ТЕМНАЯ ТЕМА) --- */
-  :root {
-    --bg: #0b1220;
-    --bg-gradient: radial-gradient(1200px 600px at 50% -10%, #16304f 0%, var(--bg) 60%);
-    --ice: #7fe3ff;
-    --ice2: #b9f2ff;
-    --accent: #ff5c8a;
-    --text: #eaf6ff;
-    --muted: #9fb3c8;
-    --card: rgba(255,255,255,0.06);
-    --border: rgba(127,227,255,0.25);
-    --radius: 18px;
-    --snow-opacity: 0.5;
-    --btn-text: #04121d;
-    --btn-bg: linear-gradient(135deg, var(--ice2), var(--ice));
-  }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+}
 
-  /* --- СВЕТЛАЯ ТЕМА (АКТИВИРУЕТСЯ КЛАССОМ .theme-light НА BODY) --- */
-  body.theme-light {
-    --bg: #e2e8f0;
-    --bg-gradient: radial-gradient(1200px 600px at 50% -10%, #cbd5e1 0%, var(--bg) 60%);
-    --ice: #0077b6;
-    --ice2: #005a8d;
-    --accent: #d90429;
-    --text: #0f172a;
-    --muted: #475569;
-    --card: #ffffff; /* Плотный белый фон для карточек */
-    --border: rgba(0,119,182,0.3);
-    --snow-opacity: 0.2;
-    --btn-text: #ffffff;
-    --btn-bg: linear-gradient(135deg, #0077b6, #005a8d);
-  }
+/* ===== ТЕМЫ ===== */
+:root, [data-theme="light"] {
+    --bg: #f8f9ff;
+    --text: #1a1a2e;
+    --text-muted: #6b7280;
+    --accent: #6366f1;
+    --accent-2: #8b5cf6;
+    --card: rgba(255, 255, 255, 0.7);
+    --border: rgba(99, 102, 241, 0.2);
+    --orb1: #a5b4fc;
+    --orb2: #c4b5fd;
+    --orb3: #fbcfe8;
+    --danger: #ef4444;
+    --gold: #f59e0b;
+}
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
+[data-theme="dark"] {
+    --bg: #0a0a15;
+    --text: #f1f5f9;
+    --text-muted: #94a3b8;
+    --accent: #818cf8;
+    --accent-2: #a78bfa;
+    --card: rgba(30, 30, 50, 0.6);
+    --border: rgba(129, 140, 248, 0.3);
+    --orb1: #4f46e5;
+    --orb2: #7c3aed;
+    --orb3: #db2777;
+    --danger: #f87171;
+    --gold: #fbbf24;
+}
 
-  body {
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-    background: var(--bg-gradient);
-    color: var(--text);
+[data-theme="pink"] {
+    --bg: #ffe0ef;
+    --text: #4a0e2e;
+    --text-muted: #a83f6d;
+    --accent: #ff4fa3;
+    --accent-2: #ff7bc4;
+    --card: rgba(255, 255, 255, 0.8);
+    --border: rgba(255, 79, 163, 0.35);
+    --orb1: #ff9ecb;
+    --orb2: #ff4fa3;
+    --orb3: #ffd1e8;
+    --danger: #ff3d7f;
+    --gold: #ffb347;
+}
+
+body {
     min-height: 100vh;
-    overflow-x: hidden;
-    line-height: 1.5;
-    transition: background 0.3s ease, color 0.3s ease;
-    position: relative;
-  }
-
-  /* ===== ФОН ЛЕДНИКОВОГО ПЕРИОДА ===== */
-  .background-scene {
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    overflow: hidden;
-    pointer-events: none;
-  }
-
-  .aurora {
-    position: absolute;
-    top: -20%;
-    left: -20%;
-    width: 140%;
-    height: 80%;
-    background: linear-gradient(120deg, rgba(127,227,255,0.15), rgba(100,255,150,0.1), rgba(255,100,200,0.1));
-    filter: blur(60px);
-    animation: auroraMove 15s ease-in-out infinite alternate;
-    opacity: 0.8;
-  }
-  body.theme-light .aurora {
-    opacity: 0.5;
-    background: linear-gradient(120deg, rgba(0,119,182,0.15), rgba(72,187,120,0.1), rgba(214,39,40,0.1));
-  }
-  @keyframes auroraMove {
-    0% { transform: translateX(-5%) skewX(-10deg); }
-    100% { transform: translateX(5%) skewX(10deg); }
-  }
-
-  .mountains {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 40%;
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 400' preserveAspectRatio='none'%3E%3Cpath d='M0,400 L0,300 L100,200 L250,320 L400,150 L550,280 L700,100 L850,250 L1000,180 L1200,300 L1200,400 Z' fill='%230b1e2e' opacity='0.8'/%3E%3Cpath d='M0,400 L0,350 L150,280 L300,350 L450,250 L600,340 L750,220 L900,330 L1050,260 L1200,350 L1200,400 Z' fill='%2316304f' opacity='0.6'/%3E%3C/svg%3E");
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-  }
-  body.theme-light .mountains {
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 400' preserveAspectRatio='none'%3E%3Cpath d='M0,400 L0,300 L100,200 L250,320 L400,150 L550,280 L700,100 L850,250 L1000,180 L1200,300 L1200,400 Z' fill='%2394a3b8' opacity='0.5'/%3E%3Cpath d='M0,400 L0,350 L150,280 L300,350 L450,250 L600,340 L750,220 L900,330 L1050,260 L1200,350 L1200,400 Z' fill='%23cbd5e1' opacity='0.4'/%3E%3C/svg%3E");
-  }
-
-  .snow {
-    position: fixed; inset: 0; pointer-events: none; z-index: 0;
-    background-image:
-      radial-gradient(2px 2px at 20% 30%, rgba(185,242,255,.8), transparent),
-      radial-gradient(2px 2px at 70% 60%, rgba(127,227,255,.6), transparent),
-      radial-gradient(1.5px 1.5px at 40% 80%, rgba(255,255,255,.7), transparent),
-      radial-gradient(2px 2px at 85% 20%, rgba(185,242,255,.5), transparent);
-    background-size: 300px 300px, 400px 400px, 350px 350px, 500px 500px;
-    animation: drift 30s linear infinite;
-    opacity: var(--snow-opacity);
-    transition: opacity 0.3s ease;
-  }
-  body.theme-light .snow {
-    background-image:
-      radial-gradient(2px 2px at 20% 30%, rgba(148,163,184,.6), transparent),
-      radial-gradient(2px 2px at 70% 60%, rgba(100,116,139,.4), transparent),
-      radial-gradient(1.5px 1.5px at 40% 80%, rgba(255,255,255,.8), transparent),
-      radial-gradient(2px 2px at 85% 20%, rgba(148,163,184,.5), transparent);
-  }
-  @keyframes drift {
-    from { background-position: 0 0, 0 0, 0 0, 0 0; }
-    to   { background-position: 300px 600px, -400px 400px, 350px 700px, 500px -500px; }
-  }
-
-  .wrap {
-    position: relative; z-index: 1;
-    max-width: 1100px; margin: 0 auto;
-    padding: 24px 16px 64px;
-  }
-
-  /* Переключатель темы */
-  .theme-toggle {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    background: var(--card);
-    border: 1px solid var(--border);
+    background: var(--bg);
     color: var(--text);
-    border-radius: 999px;
-    padding: 10px 16px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 8px;
-    transition: all 0.2s ease;
-    z-index: 20;
-  }
-  .theme-toggle:hover { border-color: var(--ice); }
-  .theme-toggle:active { transform: scale(0.97); }
+    justify-content: center;
+    overflow-x: hidden;
+    overflow-y: auto;
+    transition: background 0.5s ease, color 0.5s ease;
+    position: relative;
+    padding: 80px 0 40px;
+}
 
-  .hero { text-align: center; padding: 60px 0 40px; }
-  @media (min-width: 768px) { .hero { padding: 96px 0 64px; } }
-
-  .badge {
-    display: inline-block;
-    font-size: 12px;
-    letter-spacing: .12em; text-transform: uppercase;
-    color: var(--ice2);
-    border: 1px solid var(--border);
+/* ===== Переключатель тем ===== */
+.theme-switcher {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    display: flex;
+    gap: 10px;
+    z-index: 100;
+    padding: 8px;
     background: var(--card);
-    padding: 8px 14px; border-radius: 999px;
-    margin-bottom: 20px;
-  }
+    backdrop-filter: blur(12px);
+    border-radius: 50px;
+    border: 1px solid var(--border);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+}
 
-  .title {
-    font-size: clamp(44px, 14vw, 128px);
-    line-height: 1;
-    font-weight: 900;
-    letter-spacing: -.02em; text-transform: uppercase;
-    background: linear-gradient(180deg, var(--text) 0%, var(--ice) 60%, var(--ice2) 100%);
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-    animation: pulse 3s ease-in-out infinite;
+.theme-btn {
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    font-size: 22px;
     cursor: pointer;
-    user-select: none;
-    padding: 0 8px;
-  }
-  @keyframes pulse {
-    0%,100% { filter: drop-shadow(0 0 0 rgba(127,227,255,0)); }
-    50%     { filter: drop-shadow(0 0 24px rgba(127,227,255,.45)); }
-  }
+    transition: transform 0.3s, background 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-  .subtitle { margin-top: 18px; font-size: 16px; color: var(--muted); padding: 0 16px; }
-  .subtitle b { color: var(--ice2); }
+.theme-btn:hover {
+    transform: scale(1.15) rotate(10deg);
+    background: var(--border);
+}
 
-  .mammoth-emoji {
-    display: inline-block;
-    font-size: clamp(40px, 10vw, 72px);
-    animation: bob 2.4s ease-in-out infinite;
-  }
-  @keyframes bob {
-    0%,100% { transform: translateY(0) rotate(-4deg); }
-    50%     { transform: translateY(-12px) rotate(4deg); }
-  }
+.theme-btn.active {
+    background: var(--accent);
+    box-shadow: 0 0 20px var(--accent);
+}
 
-  .section { margin-top: 40px; }
-  .section-title { font-size: 24px; margin-bottom: 16px; text-align: center; }
-  .section-title span { color: var(--ice); }
-
-  .grid { display: grid; gap: 16px; grid-template-columns: 1fr; }
-  @media (min-width: 700px) { .grid { grid-template-columns: repeat(3, 1fr); } }
-
-  .card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 20px;
-    transition: border-color .25s ease;
-  }
-  body.theme-light .card {
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  }
-  .card h3 { font-size: 18px; margin-bottom: 8px; color: var(--ice2); }
-  .card p { color: var(--muted); font-size: 15px; }
-  .card .big { font-size: 34px; display: block; margin-bottom: 8px; }
-
-  .playground {
-    text-align: center;
-    background: var(--card);
-    border: 1px dashed var(--border);
-    border-radius: var(--radius);
-    padding: 30px 16px;
-    position: relative; overflow: hidden;
-    min-height: 360px;
-  }
-
-  .btn {
-    display: inline-flex; align-items: center; justify-content: center;
-    gap: 8px; min-height: 48px;
-    padding: 14px 24px;
-    font-size: 16px; font-weight: 700;
-    border: none; border-radius: 999px; cursor: pointer;
-    color: var(--btn-text);
-    background: var(--btn-bg);
-    box-shadow: 0 8px 24px rgba(127,227,255,.3);
-    transition: transform .15s ease;
-    user-select: none;
-    margin: 6px 4px;
-  }
-  body.theme-light .btn { box-shadow: 0 4px 12px rgba(0,119,182,.2); }
-  .btn:hover { transform: translateY(-2px); }
-  .btn:active { transform: scale(.97); }
-
-  .btn--danger { background: linear-gradient(135deg, #ff8fb0, var(--accent)); color: #2a0410; }
-  .btn--danger.runaway { position: absolute; z-index: 5; touch-action: none; }
-
-  .btn--music { background: linear-gradient(135deg, #ff9a3c, #d61f1f); color: #1a0505; margin-top: 14px; }
-  .btn--music[aria-pressed="true"] { background: linear-gradient(135deg, #b0b0b0, #555); color: #0a0a0a; }
-
-  .counter { font-size: 28px; font-weight: 900; color: var(--ice2); margin-top: 18px; }
-  .phrase { margin-top: 14px; min-height: 28px; font-size: 16px; color: var(--ice2); font-weight: 600; }
-
-  .falling { position: absolute; top: -60px; font-size: 40px; pointer-events: none; z-index: 4; animation: fall linear forwards; }
-  @keyframes fall { to { transform: translateY(460px) rotate(360deg); opacity: 0; } }
-
-  footer { margin-top: 60px; text-align: center; color: var(--muted); font-size: 14px; border-top: 1px solid var(--border); padding-top: 24px; }
-  footer .heart { color: var(--accent); }
-  footer .author { display: block; margin-top: 6px; color: var(--ice2); font-weight: 700; }
-
-  /* ===== МИНИ-ИГРА ===== */
-  .game-overlay { position: fixed; inset: 0; z-index: 100; background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center; }
-  .game-overlay.active { display: flex; }
-
-  .game-modal {
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 24px;
-    max-width: 600px;
-    width: 94%;
-    text-align: center;
-    position: relative;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-  }
-
-  .game-modal h2 { color: var(--ice2); margin-bottom: 16px; }
-  .game-modal p { color: var(--muted); margin-bottom: 20px; }
-
-  .game-area {
-    width: 100%;
-    height: 260px;
-    background: rgba(0,0,0,0.2);
-    border: 1px dashed var(--border);
-    border-radius: var(--radius);
-    position: relative;
+/* ===== Фоновые орбы ===== */
+.bg-orbs {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
     overflow: hidden;
-    margin-bottom: 20px;
-    cursor: crosshair;
-  }
-  body.theme-light .game-area { background: rgba(0,0,0,0.05); }
+    pointer-events: none;
+    transition: opacity 0.5s;
+}
 
-  .game-target {
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.7;
+    animation: float 20s infinite ease-in-out;
+    transition: transform 0.3s ease-out;
+}
+
+.orb1 { width: 500px; height: 500px; background: var(--orb1); top: -150px; left: -100px; }
+.orb2 { width: 400px; height: 400px; background: var(--orb2); bottom: -100px; right: -100px; animation-delay: -7s; }
+.orb3 { width: 350px; height: 350px; background: var(--orb3); top: 40%; left: 40%; animation-delay: -14s; }
+
+@keyframes float {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(60px, -40px) scale(1.1); }
+    66% { transform: translate(-40px, 60px) scale(0.95); }
+}
+
+/* ===== ФОН ИЗ РОЗ ===== */
+.roses-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+[data-theme="pink"] .roses-bg { opacity: 1; }
+[data-theme="pink"] .bg-orbs { opacity: 0.25; }
+
+.rose {
     position: absolute;
     font-size: 40px;
+    animation: roseFall linear infinite;
+    opacity: 0;
+    filter: drop-shadow(0 4px 12px rgba(255, 79, 163, 0.4));
+    will-change: transform, opacity;
+}
+
+@keyframes roseFall {
+    0% { transform: translateY(-15vh) rotate(0deg) scale(0.6); opacity: 0; }
+    10% { opacity: 0.85; }
+    50% { transform: translateY(50vh) rotate(180deg) scale(1); opacity: 0.9; }
+    90% { opacity: 0.7; }
+    100% { transform: translateY(115vh) rotate(360deg) scale(0.7); opacity: 0; }
+}
+
+/* ===== Контейнер ===== */
+.container {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 20px 24px;
+    max-width: 1000px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* ===== Заголовок ===== */
+.title {
+    font-size: clamp(1.8rem, 6vw, 4.5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.3em;
+    margin-bottom: 16px;
+    letter-spacing: -2px;
+}
+
+.title .word {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--text), var(--accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: wordIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+}
+
+.title .word:nth-child(1) { animation-delay: 0.1s; }
+.title .word:nth-child(2) { animation-delay: 0.25s; }
+.title .word:nth-child(3) { animation-delay: 0.4s; }
+
+.title .highlight {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+}
+
+.title .highlight::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    border-radius: 2px;
+    animation: underlineGrow 1s 0.8s ease-out backwards;
+}
+
+@keyframes wordIn {
+    from { opacity: 0; transform: translateY(40px) rotate(-5deg); }
+    to { opacity: 1; transform: translateY(0) rotate(0); }
+}
+
+@keyframes underlineGrow {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+}
+
+.subtitle {
+    color: var(--text-muted);
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    margin-bottom: 32px;
+    animation: fadeIn 1s 0.6s backwards;
+}
+
+/* ===== Общие карточки ===== */
+.card {
+    background: var(--card);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 20px 60px -20px rgba(0,0,0,0.15);
+    transition: background 0.5s, border 0.5s;
+}
+
+/* ===== Секция ответов ===== */
+.answer-section { margin-bottom: 20px; }
+
+.magic-btn {
+    position: relative;
+    padding: 16px 42px;
+    font-size: clamp(0.95rem, 2.2vw, 1.1rem);
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    border: none;
+    border-radius: 50px;
     cursor: pointer;
-    user-select: none;
-    touch-action: manipulation;
-  }
-  @media (hover: none) and (pointer: coarse) { .game-target { font-size: 50px !important; padding: 10px; } }
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.3s;
+    box-shadow: 0 10px 40px -10px var(--accent);
+    margin-bottom: 20px;
+}
 
-  .game-stats { display: flex; justify-content: center; gap: 30px; font-size: 18px; font-weight: 700; color: var(--ice2); margin-bottom: 16px; }
-  .game-btn { background: var(--btn-bg); color: var(--btn-text); border: none; border-radius: 999px; padding: 12px 28px; font-size: 16px; font-weight: 700; cursor: pointer; }
-  .game-close { position: absolute; top: 10px; right: 14px; background: none; border: none; font-size: 24px; color: var(--muted); cursor: pointer; }
-  .hidden { display: none !important; }
+.magic-btn:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 20px 60px -10px var(--accent);
+}
 
-  /* --- МОБИЛЬНАЯ АДАПТАЦИЯ КНОПОК --- */
-  @media (max-width: 500px) {
-    .playground .btn { width: 100%; margin: 6px 0; }
-    .theme-toggle { padding: 8px 12px; font-size: 12px; }
-  }
+.magic-btn:active { transform: translateY(0) scale(0.98); }
+
+.magic-btn .btn-glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.5), transparent 40%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+}
+
+.magic-btn:hover .btn-glow { opacity: 1; }
+
+.answer-box {
+    padding: 20px 28px;
+    min-height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#answerText {
+    font-size: clamp(1rem, 2.4vw, 1.25rem);
+    font-weight: 600;
+}
+
+.answer-box.pop { animation: pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
+
+@keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* ===== Генератор оскорблений ===== */
+.insult-card {
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.insult-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+    transition: left 0.6s;
+    pointer-events: none;
+}
+
+.insult-card.flash::before { left: 100%; }
+
+.section-title {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+    font-weight: 700;
+}
+
+.insult-display {
+    min-height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 14px;
+    margin-bottom: 16px;
+    border: 1px dashed var(--border);
+    transition: all 0.3s;
+}
+
+[data-theme="dark"] .insult-display { background: rgba(255,255,255,0.05); }
+
+#insultText {
+    font-size: clamp(1.05rem, 2.6vw, 1.4rem);
+    font-weight: 800;
+    line-height: 1.4;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+}
+
+.insult-display.shake { animation: shake 0.5s; }
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-8px) rotate(-1deg); }
+    40% { transform: translateX(8px) rotate(1deg); }
+    60% { transform: translateX(-5px); }
+    80% { transform: translateX(5px); }
+}
+
+.insult-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.insult-btn {
+    padding: 12px 24px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.3s;
+    box-shadow: 0 8px 24px -8px var(--accent);
+}
+
+.insult-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px -8px var(--accent);
+}
+
+.insult-btn:active { transform: scale(0.96); }
+
+.insult-btn.mega {
+    background: linear-gradient(135deg, var(--danger), var(--gold));
+    box-shadow: 0 8px 24px -8px var(--danger);
+}
+
+.insult-btn.copy {
+    background: var(--text-muted);
+    box-shadow: none;
+}
+
+/* ===== История ===== */
+.history {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.history-item {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    padding: 8px 12px;
+    background: rgba(0,0,0,0.04);
+    border-radius: 8px;
+    text-align: left;
+    animation: slideIn 0.3s ease-out;
+    border-left: 3px solid var(--accent);
+}
+
+[data-theme="dark"] .history-item { background: rgba(255,255,255,0.05); }
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* ===== Статистика ===== */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.stat-item {
+    background: var(--card);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px;
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.stat-item:hover { transform: translateY(-2px); }
+
+.stat-value {
+    font-size: 1.6rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: block;
+}
+
+.stat-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    font-weight: 600;
+}
+
+/* ===== Достижения ===== */
+.achievements {
+    margin-bottom: 20px;
+}
+
+.ach-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+}
+
+.ach {
+    font-size: 1.8rem;
+    padding: 8px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    filter: grayscale(1);
+    opacity: 0.35;
+    transition: all 0.4s;
+    cursor: help;
+    position: relative;
+}
+
+.ach.unlocked {
+    filter: grayscale(0);
+    opacity: 1;
+    border-color: var(--gold);
+    box-shadow: 0 0 20px -5px var(--gold);
+    animation: achPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes achPop {
+    0% { transform: scale(0.5) rotate(-20deg); }
+    100% { transform: scale(1) rotate(0); }
+}
+
+.ach:hover::after {
+    content: attr(data-tip);
+    position: absolute;
+    bottom: -32px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--text);
+    color: var(--bg);
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* ===== Уведомление о достижении ===== */
+.toast {
+    position: fixed;
+    top: 90px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-100px);
+    background: linear-gradient(135deg, var(--gold), var(--accent));
+    color: #fff;
+    padding: 14px 28px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1rem;
+    box-shadow: 0 10px 40px -10px var(--gold);
+    z-index: 200;
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+/* ===== Тряска экрана ===== */
+@keyframes screenShake {
+    0%, 100% { transform: translate(0, 0); }
+    10%, 30%, 50%, 70%, 90% { transform: translate(-4px, 2px) rotate(-0.3deg); }
+    20%, 40%, 60%, 80% { transform: translate(4px, -2px) rotate(0.3deg); }
+}
+
+body.shake-screen { animation: screenShake 0.6s; }
+
+/* ===== Частицы ===== */
+.particles {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 50;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    font-size: 20px;
+    animation: particleFly 1.2s ease-out forwards;
+    pointer-events: none;
+}
+
+@keyframes particleFly {
+    0% { opacity: 1; transform: translate(0, 0) scale(1) rotate(0deg); }
+    100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.3) rotate(var(--rot)); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== Адаптив ===== */
+@media (max-width: 600px) {
+    .theme-switcher { top: 12px; right: 12px; padding: 6px; gap: 6px; }
+    .theme-btn { width: 38px; height: 38px; font-size: 18px; }
+    .container { padding: 20px 16px; }
+    .card { padding: 18px; }
+}
 </style>
 </head>
 <body>
 
-  <div class="background-scene">
-    <div class="aurora"></div>
-    <div class="mountains"></div>
-  </div>
-  <div class="snow" aria-hidden="true"></div>
+<!-- Переключатель тем -->
+<div class="theme-switcher">
+    <button class="theme-btn" data-theme="light" title="Светлая">☀️</button>
+    <button class="theme-btn" data-theme="dark" title="Тёмная">🌙</button>
+    <button class="theme-btn" data-theme="pink" title="Кирилл">💖</button>
+</div>
 
-  <main class="wrap">
-    <!-- Кнопка темы теперь меняет класс на body -->
-    <button class="theme-toggle" id="themeToggle" type="button">
-      <span id="themeIcon">🌙</span> <span id="themeText">Тёмная</span>
-    </button>
+<!-- Фон -->
+<div class="roses-bg" id="rosesBg"></div>
+<div class="bg-orbs">
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+</div>
 
-    <header class="hero">
-      <div class="badge">Официальный сайт · одобрено мамонтами</div>
-      <h1 class="title" id="mainTitle">Матвей лох</h1>
-      <p class="subtitle">
-        Это <b>научно доказанный</b> факт. Подтверждено стадом мамонтов
-        <span class="mammoth-emoji">🦣</span>
-      </p>
-    </header>
+<!-- Уведомление о достижении -->
+<div class="toast" id="toast">🏆 <span id="toastText"></span></div>
 
-    <section class="section" aria-labelledby="facts">
-      <h2 class="section-title" id="facts">Почему <span>Матвей лох</span>?</h2>
-      <div class="grid">
-        <article class="card">
-          <span class="big">🦣</span>
-          <h3>Мамонты говорят</h3>
-          <p>Великий указ великого его величества дал повеление на это.</p>
-        </article>
-        <article class="card">
-          <span class="big">🧊</span>
-          <h3>Найдено во льдах</h3>
-          <p>многократный пиздежь по поводу великих ауденций</p>
-        </article>
-        <article class="card">
-          <span class="big">📜</span>
-          <h3>Официально</h3>
-          <p>Занесено в реестр экстремистких затворников. Печать государственная прилагается.</p>
-        </article>
-      </div>
-    </section>
+<!-- Основной контент -->
+<main class="container">
+    <h1 class="title">
+        <span class="word">Ответь</span>
+        <span class="word highlight">Кирилл</span>
+        <span class="word">мудила</span>
+    </h1>
 
-    <section class="section" aria-labelledby="play">
-      <h2 class="section-title" id="play">Интерактив <span>с мамонтами</span></h2>
-      <div class="playground" id="playground">
-        <p style="color:var(--muted); margin-bottom: 18px;">
-          Жми кнопки — мамонты не заставят себя ждать 🦣
-        </p>
-        <button class="btn" id="mammothBtn" type="button">Позвать мамонта 🦣</button>
-        <button class="btn btn--danger" id="runBtn" type="button">Поймать Матвея 😈</button>
-        <div class="counter" id="counter">Мамонтов призвано: 0</div>
-        <div class="phrase" id="phrase"></div>
-        <button class="btn btn--music" id="musicBtn" type="button" aria-pressed="false">🎵 Включить гимн мамонтов</button>
-        <button class="btn" id="gameBtn" type="button" style="margin-top: 14px; background: linear-gradient(135deg, #ffd700, #ff8c00); color: #2a1600;">🎮 Мини-игра: Ловец мамонтов</button>
-      </div>
-    </section>
+    <p class="subtitle">Генератор оскорблений, ответы и куча всего 👇</p>
 
-    <footer>
-      Сделано с <span class="heart">🍺</span> и мамонтами · <span id="year"></span>
-      <span class="author">👑 Его Величество Александр Великий</span>
-    </footer>
-  </main>
-
-  <!-- Модальное окно мини-игры -->
-  <div class="game-overlay" id="gameOverlay">
-    <div class="game-modal">
-      <button class="game-close" id="gameClose" aria-label="Закрыть игру">✕</button>
-      <h2>🎮 Ловец мамонтов</h2>
-      <p>Кликай по мамонтам! У тебя 15 секунд, чтобы поймать как можно больше.</p>
-      <div class="game-stats">
-        <span>⏱ <span id="gameTimer">15</span> с</span>
-        <span>🦣 <span id="gameScore">0</span></span>
-      </div>
-      <div class="game-area" id="gameArea"></div>
-      <button class="game-btn" id="startGameBtn">Начать игру</button>
-      <button class="game-btn hidden" id="restartGameBtn">Играть снова</button>
+    <!-- Статистика -->
+    <div class="stats-grid">
+        <div class="stat-item">
+            <span class="stat-value" id="statClicks">0</span>
+            <span class="stat-label">Кликов</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-value" id="statInsults">0</span>
+            <span class="stat-label">Оскорблений</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-value" id="statAnswers">0</span>
+            <span class="stat-label">Ответов</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-value" id="statAch">0/6</span>
+            <span class="stat-label">Ачивки</span>
+        </div>
     </div>
-  </div>
+
+    <!-- Генератор оскорблений -->
+    <div class="card insult-card" id="insultCard">
+        <div class="section-title">🎲 Генератор оскорблений</div>
+        <div class="insult-display" id="insultDisplay">
+            <span id="insultText">Нажми кнопку 👇</span>
+        </div>
+        <div class="insult-buttons">
+            <button class="insult-btn" id="genInsult">🎲 Сгенерировать</button>
+            <button class="insult-btn mega" id="megaInsult">💥 МЕГА</button>
+            <button class="insult-btn copy" id="copyInsult">📋 Копировать</button>
+        </div>
+        <div class="history" id="history"></div>
+    </div>
+
+    <!-- Секция ответов -->
+    <div class="card answer-section">
+        <div class="section-title">💬 Ответ Кириллу</div>
+        <button class="magic-btn" id="magicBtn">
+            <span class="btn-text">Ответить Кириллу</span>
+            <span class="btn-glow"></span>
+        </button>
+        <div class="answer-box" id="answerBox">
+            <p id="answerText">Кирилл, ты тут? 👀</p>
+        </div>
+    </div>
+
+    <!-- Достижения -->
+    <div class="card achievements">
+        <div class="section-title">🏆 Достижения</div>
+        <div class="ach-grid" id="achGrid"></div>
+    </div>
+</main>
+
+<div class="particles" id="particles"></div>
 
 <script>
-  document.getElementById('year').textContent = new Date().getFullYear();
+// ===== Переключение тем =====
+const themeBtns = document.querySelectorAll('.theme-btn');
+const savedTheme = localStorage.getItem('theme') || 'light';
 
-  // ===== ПЕРЕКЛЮЧАТЕЛЬ ТЕМЫ =====
-  const themeToggle = document.getElementById('themeToggle');
-  const themeIcon = document.getElementById('themeIcon');
-  const themeText = document.getElementById('themeText');
-  const bodyEl = document.body; // Меняем класс на body
+function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    themeBtns.forEach(b => b.classList.toggle('active', b.dataset.theme === theme));
+    localStorage.setItem('theme', theme);
+    setTimeout(createRoses, 100);
+}
 
-  function applyTheme(theme) {
-    if (theme === 'light') {
-      bodyEl.classList.add('theme-light');
-      themeIcon.textContent = '☀️';
-      themeText.textContent = 'Светлая';
+applyTheme(savedTheme);
+
+themeBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        applyTheme(btn.dataset.theme);
+        burst(window.innerWidth / 2, window.innerHeight / 2, '✨', 12);
+    });
+});
+
+// ===== Розы =====
+const rosesBg = document.getElementById('rosesBg');
+const roseEmojis = ['🌹', '🌷', '🌸', '🌺', '💮', '🏵️'];
+
+function createRoses() {
+    rosesBg.innerHTML = '';
+    if (document.documentElement.getAttribute('data-theme') !== 'pink') return;
+
+    for (let i = 0; i < 30; i++) {
+        const rose = document.createElement('div');
+        rose.className = 'rose';
+        rose.textContent = roseEmojis[Math.floor(Math.random() * roseEmojis.length)];
+        rose.style.left = (Math.random() * 100) + 'vw';
+        rose.style.fontSize = (24 + Math.random() * 44) + 'px';
+        rose.style.animationDuration = (8 + Math.random() * 12) + 's';
+        rose.style.animationDelay = (-Math.random() * 20) + 's';
+        rosesBg.appendChild(rose);
+    }
+}
+createRoses();
+
+// ===== СИСТЕМА ДОСТИЖЕНИЙ =====
+const ACHIEVEMENTS = {
+    firstInsult: { icon: '🎯', name: 'Первый выстрел', tip: 'Сгенерируй первое оскорбление' },
+    tenInsults:  { icon: '🔥', name: 'Разогрев', tip: '10 оскорблений' },
+    fiftyInsults:{ icon: '💀', name: 'Машина оскорблений', tip: '50 оскорблений' },
+    mega:        { icon: '💥', name: 'МЕГА-удар', tip: 'Используй мега-кнопку' },
+    copyMaster:  { icon: '📋', name: 'Копировальщик', tip: 'Скопируй оскорбление' },
+    answer5:     { icon: '💬', name: 'Диалог', tip: 'Получи 5 ответов' }
+};
+
+const achGrid = document.getElementById('achGrid');
+const unlocked = JSON.parse(localStorage.getItem('unlockedAch') || '{}');
+
+Object.entries(ACHIEVEMENTS).forEach(([key, a]) => {
+    const el = document.createElement('div');
+    el.className = 'ach' + (unlocked[key] ? ' unlocked' : '');
+    el.textContent = a.icon;
+    el.dataset.tip = a.tip;
+    el.dataset.key = key;
+    achGrid.appendChild(el);
+});
+
+function unlockAch(key) {
+    if (unlocked[key]) return;
+    unlocked[key] = true;
+    localStorage.setItem('unlockedAch', JSON.stringify(unlocked));
+
+    const el = document.querySelector(`.ach[data-key="${key}"]`);
+    if (el) el.classList.add('unlocked');
+
+    showToast(`🏆 Достижение: ${ACHIEVEMENTS[key].name}`);
+    updateStats();
+}
+
+const toast = document.getElementById('toast');
+const toastText = document.getElementById('toastText');
+let toastTimer;
+
+function showToast(text) {
+    toastText.textContent = text;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+// ===== СТАТИСТИКА =====
+const stats = {
+    clicks: parseInt(localStorage.getItem('s_clicks') || '0'),
+    insults: parseInt(localStorage.getItem('s_insults') || '0'),
+    answers: parseInt(localStorage.getItem('s_answers') || '0')
+};
+
+function updateStats() {
+    document.getElementById('statClicks').textContent = stats.clicks;
+    document.getElementById('statInsults').textContent = stats.insults;
+    document.getElementById('statAnswers').textContent = stats.answers;
+    document.getElementById('statAch').textContent = Object.keys(unlocked).length + '/6';
+}
+
+function saveStats() {
+    localStorage.setItem('s_clicks', stats.clicks);
+    localStorage.setItem('s_insults', stats.insults);
+    localStorage.setItem('s_answers', stats.answers);
+    updateStats();
+}
+
+updateStats();
+
+// ===== ГЕНЕРАТОР ОСКОРБЛЕНИЙ =====
+const adjectives = [
+    'тупоголовый', 'безмозглый', 'криворукий', 'косноязычный', 'бестолковый',
+    'недоразвитый', 'заторможенный', 'мелкобородый', 'несуразный', 'угрюмый',
+    'бородатый', 'подзаборный', 'козлоногий', 'слоноухий', 'пучеглазый',
+    'жирнобрюхий', 'кривоногий', 'плешивый', 'хлипкий', 'зачуханный',
+    'сопливый', 'драный', 'подвальный', 'посконный', 'недоделанный',
+    'неотёсанный', 'заскорузлый', 'мелкотравчатый', 'свинорылый', 'блохастый',
+    'брюзгливый', 'ворчливый', 'нелепый', 'куцый', 'заплывший'
+];
+
+const nouns = [
+    'мудила', 'чудак на букву м', 'индюк', 'олух', 'пень',
+    'валенок', 'чучело', 'пугало', 'лапоть', 'дуралей',
+    'балбес', 'тупица', 'недотёпа', 'растяпа', 'разгильдяй',
+    'лодырь', 'бездельник', 'прохвост', 'хлюпик', 'слюнтяй',
+    'ротозей', 'зевака', 'простофиля', 'недоумок', 'балабол',
+    'пустозвон', 'трепло', 'хвастун', 'зануда', 'нытик',
+    'пессимист', 'скряга', 'жадина', 'грубиян', 'невежа'
+];
+
+const megaAdjectives = [
+    'абсолютно', 'катастрофически', 'клинически', 'феноменально',
+    'эпически', 'легендарно', 'исторически', 'космически',
+    'вселенски', 'фантастически', 'тотально', 'беспросветно'
+];
+
+const endings = [
+    '!', '!!', '!!!', ' 💀', ' 🤡', ' 🔥', ' 💩', ' 🌚', ' 🚮', ' ⚰️'
+];
+
+function randomItem(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function generateInsult(mega = false) {
+    let text = '';
+    if (mega) {
+        text = `${randomItem(megaAdjectives)} ${randomItem(adjectives)} ${randomItem(nouns)}${randomItem(endings)}`;
     } else {
-      bodyEl.classList.remove('theme-light');
-      themeIcon.textContent = '🌙';
-      themeText.textContent = 'Тёмная';
+        text = `${randomItem(adjectives)} ${randomItem(nouns)}${randomItem(endings)}`;
     }
-  }
+    // Заглавная первая буква
+    return text.charAt(0).toUpperCase() + text.slice(1);
+}
 
-  // Проверяем сохраненную тему при загрузке
-  const savedTheme = localStorage.getItem('theme');
-  const initialTheme = savedTheme || 'dark'; // По умолчанию темная
-  applyTheme(initialTheme);
+const insultText = document.getElementById('insultText');
+const insultDisplay = document.getElementById('insultDisplay');
+const insultCard = document.getElementById('insultCard');
+const historyEl = document.getElementById('history');
+const historyList = JSON.parse(localStorage.getItem('insultHistory') || '[]');
 
-  themeToggle.addEventListener('click', () => {
-    const isLight = bodyEl.classList.contains('theme-light');
-    const nextTheme = isLight ? 'dark' : 'light';
-    applyTheme(nextTheme);
-    localStorage.setItem('theme', nextTheme);
-  });
+function renderHistory() {
+    historyEl.innerHTML = historyList.slice(0, 5).map(h =>
+        `<div class="history-item">${h}</div>`
+    ).join('');
+}
+renderHistory();
 
-  // ===== ПАСХАЛКА В ЗАГОЛОВКЕ =====
-  let titleClicks = 0;
-  const mainTitle = document.getElementById('mainTitle');
-  mainTitle.addEventListener('click', () => {
-    titleClicks++;
-    if (titleClicks === 10) {
-      mainTitle.textContent = 'Матвей ОЧЕНЬ лох 🦣🔥';
-      mainTitle.style.animation = 'none';
-      setTimeout(() => {
-        mainTitle.textContent = 'Матвей лох';
-        mainTitle.style.animation = '';
-        titleClicks = 0;
-      }, 3000);
+function addToHistory(text) {
+    historyList.unshift(text);
+    if (historyList.length > 10) historyList.pop();
+    localStorage.setItem('insultHistory', JSON.stringify(historyList));
+    renderHistory();
+}
+
+function showInsult(text, mega = false) {
+    insultText.textContent = text;
+    insultDisplay.classList.remove('shake');
+    void insultDisplay.offsetWidth;
+    insultDisplay.classList.add('shake');
+
+    insultCard.classList.remove('flash');
+    void insultCard.offsetWidth;
+    insultCard.classList.add('flash');
+
+    addToHistory(text);
+
+    stats.insults++;
+    saveStats();
+
+    if (stats.insults === 1) unlockAch('firstInsult');
+    if (stats.insults === 10) unlockAch('tenInsults');
+    if (stats.insults === 50) unlockAch('fiftyInsults');
+    if (mega) unlockAch('mega');
+
+    // Частицы
+    const rect = insultDisplay.getBoundingClientRect();
+    if (mega) {
+        burst(rect.left + rect.width / 2, rect.top + rect.height / 2, '💥', 30);
+        document.body.classList.remove('shake-screen');
+        void document.body.offsetWidth;
+        document.body.classList.add('shake-screen');
+    } else {
+        burst(rect.left + rect.width / 2, rect.top + rect.height / 2, '💢', 10);
     }
-  });
+}
 
-  // ===== ОСНОВНОЙ ФУНКЦИОНАЛ =====
-  const playground = document.getElementById('playground');
-  const mammothBtn = document.getElementById('mammothBtn');
-  const counterEl = document.getElementById('counter');
-  const phraseEl = document.getElementById('phrase');
-  let count = 0;
+document.getElementById('genInsult').addEventListener('click', () => {
+    showInsult(generateInsult(false));
+    stats.clicks++;
+    saveStats();
+});
 
-  const phrases = [
-    'Мамонт прибыл. Он всё видел. 🦣',
-    'Мамонт подтверждает: Матвей лох. ✅',
-    'Стадо в восторге! 🎉',
-    'Мамонт говорит: «я не сдал огэ с 5 раза».',
-    'Ещё один мамонт в деле! 💪',
-    'Мамонт принёс льдину с доказательствами. 🧊',
-    'Мамонту рекомендуется идти нахуй. 😎',
-    'Мамонт отменил ауденцию. 🦣🦣🦣'
-  ];
+document.getElementById('megaInsult').addEventListener('click', () => {
+    showInsult(generateInsult(true), true);
+    stats.clicks++;
+    saveStats();
+});
 
-  function spawnMammoth() {
-    const el = document.createElement('span');
-    el.className = 'falling';
-    el.textContent = '🦣';
-    el.style.left = Math.random() * (playground.clientWidth - 50) + 'px';
-    el.style.fontSize = (28 + Math.random() * 28) + 'px';
-    el.style.animationDuration = (1.4 + Math.random() * 1.2) + 's';
-    playground.appendChild(el);
-    el.addEventListener('animationend', () => el.remove());
-  }
-
-  mammothBtn.addEventListener('click', () => {
-    count++;
-    counterEl.textContent = 'Мамонтов призвано: ' + count;
-    phraseEl.textContent = phrases[Math.floor(Math.random() * phrases.length)];
-    for (let i = 0; i < 3; i++) setTimeout(spawnMammoth, i * 120);
-    if (navigator.vibrate) navigator.vibrate(30);
-  });
-
-  const runBtn = document.getElementById('runBtn');
-  const catchPhrases = [
-    'Матвей сьебался. Как всегда. 🏃',
-    'Почти поймал! Но Матвей лох — отменил ауденцию. 😅',
-    'Мамонт перегородил дорогу. Матвей не сдаст егэ. 🦣',
-    'Матвей спрятался за мамонтом. Классика. 🧊',
-    'Кнопка устала. Матвей — лох, это факт. ✅',
-    'Мамонты смеются. Матвей где-то там. 🦣😂'
-  ];
-  let caught = 0;
-
-  function moveButton() {
-    const pad = 8;
-    const maxX = playground.clientWidth - runBtn.offsetWidth - pad;
-    const maxY = playground.clientHeight - runBtn.offsetHeight - pad;
-    runBtn.classList.add('runaway');
-    runBtn.style.left = Math.max(pad, Math.random() * maxX) + 'px';
-    runBtn.style.top = Math.max(pad, Math.random() * maxY) + 'px';
-  }
-
-  runBtn.addEventListener('mouseenter', moveButton);
-  runBtn.addEventListener('touchstart', (e) => {
-    if (Math.random() < 0.6) { e.preventDefault(); moveButton(); }
-  }, { passive: false });
-
-  runBtn.addEventListener('click', () => {
-    caught++;
-    phraseEl.textContent = catchPhrases[Math.floor(Math.random() * catchPhrases.length)] +
-      ' (пойман раз: ' + caught + ')';
-    if (navigator.vibrate) navigator.vibrate([20, 40, 20]);
-    runBtn.classList.remove('runaway');
-    runBtn.style.left = '';
-    runBtn.style.top = '';
-  });
-
-  window.addEventListener('resize', () => {
-    if (runBtn.classList.contains('runaway')) {
-      runBtn.classList.remove('runaway');
-      runBtn.style.left = '';
-      runBtn.style.top = '';
+document.getElementById('copyInsult').addEventListener('click', async () => {
+    const text = insultText.textContent;
+    if (text === 'Нажми кнопку 👇') {
+        showToast('Сначала сгенерируй оскорбление!');
+        return;
     }
-  });
+    try {
+        await navigator.clipboard.writeText(text);
+        showToast('📋 Скопировано!');
+        unlockAch('copyMaster');
+    } catch {
+        showToast('Не удалось скопировать');
+    }
+    stats.clicks++;
+    saveStats();
+});
 
-  // ===== ГИМН МАМОНТОВ =====
-  const musicBtn = document.getElementById('musicBtn');
-  let audioCtx = null;
-  let musicTimer = null;
-  let musicOn = false;
+// ===== ОТВЕТЫ =====
+const answers = [
+    'Кирилл молчит... как всегда 😏',
+    'Да, я мудила. И что? 🤷',
+    'Кирилл вышел. Перезвоните позже 📞',
+    'Это не я, это жизнь такая 🌧️',
+    'Обидно, но справедливо 😔',
+    'Кирилл в домике 🏠',
+    'Я не мудила, я сложный человек 🎭',
+    'Ок, признаю. Но только один раз ✋',
+    'Ладно, ладно. Я всё понял 😅',
+    'Кирилл передаёт: "иди ты" 🖕',
+    'Ответ: 42. Вопрос не тот 🤖',
+    'Кирилл спит. Не будить 😴',
+    'Слышу тебя, но не слушаю 👂',
+    'Мудила — это состояние души ✨',
+    'А кто не мудила? Все мудилы 🌍'
+];
 
-  function initAudio() {
-    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    if (audioCtx.state === 'suspended') audioCtx.resume();
-    return audioCtx;
-  }
+const emojis = ['💖', '🌸', '✨', '🔥', '💫', '⭐', '🎉', '💯', '👏', '🤣', '😎', '🚀'];
 
-  function harshTone(ctx, freq, startTime, duration, gainValue = 0.18, type = 'sawtooth') {
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.type = type;
-    osc.frequency.setValueAtTime(freq, startTime);
-    osc.frequency.exponentialRampToValueAtTime(Math.max(20, freq * 0.85), startTime + duration);
-    gain.gain.setValueAtTime(0.0001, startTime);
-    gain.gain.exponentialRampToValueAtTime(gainValue, startTime + 0.005);
-    gain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
-    osc.connect(gain).connect(ctx.destination);
-    osc.start(startTime);
-    osc.stop(startTime + duration + 0.05);
-  }
+const btn = document.getElementById('magicBtn');
+const answerBox = document.getElementById('answerBox');
+const answerText = document.getElementById('answerText');
 
-  function noiseBurst(ctx, startTime, duration, gainValue = 0.12, cutoff = 1800) {
-    const frames = Math.max(1, Math.floor(ctx.sampleRate * duration));
-    const buffer = ctx.createBuffer(1, frames, ctx.sampleRate);
-    const data = buffer.getChannelData(0);
-    for (let i = 0; i < frames; i++) data[i] = Math.random() * 2 - 1;
-    const src = ctx.createBufferSource();
-    src.buffer = buffer;
-    const filter = ctx.createBiquadFilter();
-    filter.type = 'bandpass';
-    filter.frequency.value = cutoff;
-    filter.Q.value = 4;
-    const gain = ctx.createGain();
-    gain.gain.setValueAtTime(gainValue, startTime);
-    gain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
-    src.connect(filter).connect(gain).connect(ctx.destination);
-    src.start(startTime);
-    src.stop(startTime + duration + 0.02);
-  }
+btn.addEventListener('mousemove', (e) => {
+    const rect = btn.getBoundingClientRect();
+    btn.style.setProperty('--x', `${e.clientX - rect.left}px`);
+    btn.style.setProperty('--y', `${e.clientY - rect.top}px`);
+});
 
-  function scheduleHarshBar() {
-    if (!audioCtx) return;
-    const bpm = 150;
-    const beat = 60 / bpm;
-    const t0 = audioCtx.currentTime + 0.05;
-    let t = t0;
+btn.addEventListener('click', () => {
+    answerText.textContent = randomItem(answers);
 
-    const motif = [130.81, 185.00, 130.81, 207.65, 246.94, 174.61];
-    motif.forEach((f, i) => {
-      harshTone(audioCtx, f, t, beat * 0.45, 0.16, 'sawtooth');
-      harshTone(audioCtx, f * 1.06, t, beat * 0.45, 0.10, 'square');
-      if (i % 2 === 0) harshTone(audioCtx, f * 8, t + beat * 0.1, beat * 0.2, 0.05, 'square');
-      noiseBurst(audioCtx, t, beat * 0.35, 0.10, 1500 + Math.random() * 1200);
-      t += beat;
+    answerBox.classList.remove('pop');
+    void answerBox.offsetWidth;
+    answerBox.classList.add('pop');
+
+    stats.answers++;
+    stats.clicks++;
+    saveStats();
+
+    if (stats.answers === 5) unlockAch('answer5');
+
+    const rect = btn.getBoundingClientRect();
+    burst(rect.left + rect.width / 2, rect.top + rect.height / 2, null, 18);
+});
+
+// ===== ВЗРЫВ ЧАСТИЦ =====
+function burst(x, y, fixedEmoji = null, amount = 20) {
+    const particlesContainer = document.getElementById('particles');
+
+    for (let i = 0; i < amount; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        p.textContent = fixedEmoji || emojis[Math.floor(Math.random() * emojis.length)];
+
+        const angle = Math.random() * Math.PI * 2;
+        const distance = 80 + Math.random() * 200;
+        const dx = Math.cos(angle) * distance;
+        const dy = Math.sin(angle) * distance;
+        const rot = (Math.random() - 0.5) * 720;
+
+        p.style.left = x + 'px';
+        p.style.top = y + 'px';
+        p.style.setProperty('--dx', dx + 'px');
+        p.style.setProperty('--dy', dy + 'px');
+        p.style.setProperty('--rot', rot + 'deg');
+
+        particlesContainer.appendChild(p);
+        setTimeout(() => p.remove(), 1300);
+    }
+}
+
+// ===== ПАРАЛЛАКС =====
+const orbs = document.querySelectorAll('.orb');
+document.addEventListener('mousemove', (e) => {
+    const x = (e.clientX / window.innerWidth - 0.5) * 2;
+    const y = (e.clientY / window.innerHeight - 0.5) * 2;
+    orbs.forEach((orb, i) => {
+        const speed = (i + 1) * 15;
+        orb.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
     });
+});
 
-    const endT = t;
-    harshTone(audioCtx, 130.81, endT, beat * 1.4, 0.14, 'sawtooth');
-    harshTone(audioCtx, 185.00, endT, beat * 1.4, 0.12, 'sawtooth');
-    harshTone(audioCtx, 246.94, endT, beat * 1.4, 0.10, 'square');
-    noiseBurst(audioCtx, endT, beat * 0.8, 0.14, 900);
-
-    const totalMs = (endT - audioCtx.currentTime + beat * 1.6) * 1000;
-    musicTimer = setTimeout(() => {
-      if (musicOn) scheduleHarshBar();
-    }, totalMs);
-  }
-
-  function startMusic() {
-    initAudio();
-    musicOn = true;
-    scheduleHarshBar();
-    musicBtn.textContent = '⏹ Выключить гимн';
-    musicBtn.setAttribute('aria-pressed', 'true');
-  }
-
-  function stopMusic() {
-    musicOn = false;
-    if (musicTimer) clearTimeout(musicTimer);
-    musicTimer = null;
-    if (audioCtx && audioCtx.state === 'running') audioCtx.suspend();
-    musicBtn.textContent = '🎵 Включить гимн мамонтов';
-    musicBtn.setAttribute('aria-pressed', 'false');
-  }
-
-  musicBtn.addEventListener('click', () => {
-    if (!musicOn) startMusic();
-    else stopMusic();
-  });
-
-  // ===== МИНИ-ИГРА =====
-  const gameBtn = document.getElementById('gameBtn');
-  const gameOverlay = document.getElementById('gameOverlay');
-  const gameClose = document.getElementById('gameClose');
-  const startGameBtn = document.getElementById('startGameBtn');
-  const restartGameBtn = document.getElementById('restartGameBtn');
-  const gameArea = document.getElementById('gameArea');
-  const gameTimerEl = document.getElementById('gameTimer');
-  const gameScoreEl = document.getElementById('gameScore');
-
-  let gameActive = false;
-  let gameScore = 0;
-  let gameTimeLeft = 15;
-  let gameTimerInterval = null;
-  let gameSpawnInterval = null;
-
-  function openGame() {
-    gameOverlay.classList.add('active');
-    resetGame();
-  }
-
-  function closeGame() {
-    gameOverlay.classList.remove('active');
-    stopGame();
-  }
-
-  function resetGame() {
-    stopGame();
-    gameScore = 0;
-    gameTimeLeft = 15;
-    gameScoreEl.textContent = '0';
-    gameTimerEl.textContent = '15';
-    gameArea.innerHTML = '';
-    startGameBtn.classList.remove('hidden');
-    restartGameBtn.classList.add('hidden');
-    gameActive = false;
-  }
-
-  function stopGame() {
-    gameActive = false;
-    if (gameTimerInterval) clearInterval(gameTimerInterval);
-    if (gameSpawnInterval) clearInterval(gameSpawnInterval);
-    gameTimerInterval = null;
-    gameSpawnInterval = null;
-    gameArea.innerHTML = '';
-  }
-
-  function spawnGameTarget() {
-    if (!gameActive) return;
-    const el = document.createElement('span');
-    el.className = 'game-target';
-    el.textContent = '🦣';
-    const maxX = gameArea.clientWidth - 50;
-    const maxY = gameArea.clientHeight - 50;
-    el.style.left = Math.random() * maxX + 'px';
-    el.style.top = Math.random() * maxY + 'px';
-    el.style.fontSize = (30 + Math.random() * 20) + 'px';
-
-    el.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (!gameActive) return;
-      gameScore++;
-      gameScoreEl.textContent = gameScore;
-      el.remove();
-      if (navigator.vibrate) navigator.vibrate(15);
-    });
-
-    gameArea.appendChild(el);
-    setTimeout(() => { if (el.parentNode) el.remove(); }, 2000);
-  }
-
-  function startGame() {
-    resetGame();
-    gameActive = true;
-    startGameBtn.classList.add('hidden');
-    restartGameBtn.classList.add('hidden');
-
-    gameTimerInterval = setInterval(() => {
-      gameTimeLeft--;
-      gameTimerEl.textContent = gameTimeLeft;
-      if (gameTimeLeft <= 0) endGame();
-    }, 1000);
-
-    gameSpawnInterval = setInterval(spawnGameTarget, 400);
-    for (let i = 0; i < 3; i++) spawnGameTarget();
-  }
-
-  function endGame() {
-    stopGame();
-    gameActive = false;
-    gameArea.innerHTML = '';
-    restartGameBtn.classList.remove('hidden');
-    startGameBtn.classList.add('hidden');
-    restartGameBtn.textContent = `Играть снова (счёт: ${gameScore})`;
-  }
-
-  gameBtn.addEventListener('click', openGame);
-  gameClose.addEventListener('click', closeGame);
-  startGameBtn.addEventListener('click', startGame);
-  restartGameBtn.addEventListener('click', startGame);
-
-  gameOverlay.addEventListener('click', (e) => {
-    if (e.target === gameOverlay) closeGame();
-  });
+// ===== КЛИК В ЛЮБОМ МЕСТЕ =====
+document.addEventListener('click', (e) => {
+    if (e.target.closest('button')) return;
+    burst(e.clientX, e.clientY, null, 6);
+});
 </script>
+
 </body>
 </html>
